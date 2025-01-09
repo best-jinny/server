@@ -1,11 +1,11 @@
-package kr.hhplus.be.server.wallet.interfaces.controller;
+package kr.hhplus.be.server.point.interfaces.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/wallets")
-public class WalletController {
+@RequestMapping("/api/v1/points")
+public class PointController {
 
     // 잔액 충전
     @PostMapping
@@ -21,11 +21,11 @@ public class WalletController {
 
     // 잔액 조회
     @GetMapping("/balance")
-    public ResponseEntity<?> getBalance(@RequestParam Long customerId) {
-        if (customerId == null) {
+    public ResponseEntity<?> getBalance(@RequestParam Long userId) {
+        if (userId == null) {
             return ResponseEntity.badRequest().body("유효하지 않은 사용자 ID 입니다.");
         }
-        GetBalanceResponse response = new GetBalanceResponse(customerId, 50000);
+        GetBalanceResponse response = new GetBalanceResponse(userId, 50000);
         return ResponseEntity.ok(response);
     }
 

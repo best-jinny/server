@@ -15,7 +15,7 @@ public class CouponController {
     // 쿠폰 발급
     @PostMapping
     public ResponseEntity<?> issue(@RequestBody CouponIssueRequest request) {
-        if (request.getCustomerId() == null || request.getCouponId() == null ) {
+        if (request.getUserId() == null || request.getCouponId() == null ) {
             return ResponseEntity.badRequest().body("유효하지 않은 요청입니다.");
         }
 
@@ -25,7 +25,7 @@ public class CouponController {
 
     // 쿠폰 조회
     @GetMapping
-    public ResponseEntity<?> list( @RequestParam(value = "customerId", required = true) String customerId,
+    public ResponseEntity<?> list( @RequestParam(value = "UserId", required = true) String UserId,
                                    @RequestParam(value = "isValid", required = false) Boolean isValid,
                                    @RequestParam(value = "isUsed", required = false) Boolean isUsed) {
 
