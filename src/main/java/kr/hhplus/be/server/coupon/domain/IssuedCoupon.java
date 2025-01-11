@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import kr.hhplus.be.server.common.entity.BaseTimeEntity;
 import kr.hhplus.be.server.common.exceptions.InvalidCouponException;
 import kr.hhplus.be.server.user.domain.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,9 +22,7 @@ public class IssuedCoupon extends BaseTimeEntity {
     @ManyToOne
     private Coupon coupon;
 
-    @JoinColumn(name = "user_id")
-    @ManyToOne
-    private User user;
+    private Long userId;
 
     @Enumerated(EnumType.STRING)
     private CouponStatus status; // VALID, USED
@@ -35,7 +34,7 @@ public class IssuedCoupon extends BaseTimeEntity {
             throw new InvalidCouponException("만료된 쿠폰입니다");
         }
 
-        if(status.equals(CouponStatus.USED)) {
+        if(status == CouponStatus.USED) {
             throw new InvalidCouponException("이미 사용된 쿠폰입니다");
         }
     }
@@ -43,6 +42,15 @@ public class IssuedCoupon extends BaseTimeEntity {
     public void markAsUsed() {
        validate();
        status = CouponStatus.USED;
+    }
+
+    @Builder
+    public IssuedCoupon(Coupon coupon, Long userId, CouponStatus status, LocalDateTime issuedAt, LocalDateTime expiredAt) {
+        this.coupon = coupon;
+        this.userId = userId;
+        this.status = status;
+        this.issuedAt = issuedAt;
+        this.expiredAt = expiredAt;
     }
 
 
