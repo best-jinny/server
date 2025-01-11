@@ -36,7 +36,7 @@ public class OrderFacade {
        validateProductPrices(orderCriteria);
        processStockDeduction(orderCriteria);
        User user = fetchUser(orderCriteria);
-       Order order = createOrder(user, orderCriteria);
+       Order order = createOrder(orderCriteria);
        applyCouponIfPresent(orderCriteria, order);
        processPayment(order, user);
        completeOrder(order);
@@ -59,8 +59,8 @@ public class OrderFacade {
         return userService.getUser(criteria.getUserId());
     }
 
-    private Order createOrder(User user, OrderCriteria criteria) {
-        return Order.createOrder(user, criteria.toOrderLines());
+    private Order createOrder(OrderCriteria criteria) {
+        return Order.createOrder(criteria.getUserId(), criteria.toOrderLines());
     }
 
     private void applyCouponIfPresent(OrderCriteria criteria, Order order) {
