@@ -1,5 +1,8 @@
 package kr.hhplus.be.server.coupon.interfaces.controller;
 
+import kr.hhplus.be.server.coupon.domain.IssuedCoupon;
+import kr.hhplus.be.server.coupon.facade.CouponFacade;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/coupons")
+@RequiredArgsConstructor
 public class CouponController {
+
+    private final CouponFacade couponFacade;
 
     // 쿠폰 발급
     @PostMapping
@@ -19,8 +25,10 @@ public class CouponController {
             return ResponseEntity.badRequest().body("유효하지 않은 요청입니다.");
         }
 
+        IssuedCoupon coupon = couponFacade.issueCoupon(request.getUserId(), request.getCouponId());
+
         CouponIssueResponse response = new CouponIssueResponse();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(coupon);
     }
 
     // 쿠폰 조회

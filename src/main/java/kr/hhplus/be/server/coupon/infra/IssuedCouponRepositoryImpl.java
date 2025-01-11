@@ -18,8 +18,13 @@ public class IssuedCouponRepositoryImpl implements IssuedCouponRepository {
     }
 
     @Override
-    public void save(IssuedCoupon coupon) {
-        issuedCouponJpaRepository.save(coupon);
+    public boolean existsByCouponIdAndUserId(Long couponId, Long userId) {
+        return issuedCouponJpaRepository.existsByCouponIdAndUserId(couponId, userId);
+    }
+
+    @Override
+    public IssuedCoupon save(IssuedCoupon coupon) {
+       return issuedCouponJpaRepository.save(coupon);
     }
 
 }

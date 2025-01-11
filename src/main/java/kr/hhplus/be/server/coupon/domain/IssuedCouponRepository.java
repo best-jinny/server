@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface IssuedCouponRepository {
-    void save(IssuedCoupon coupon);
+    IssuedCoupon save(IssuedCoupon coupon);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT ic FROM IssuedCoupon ic WHERE ic.id = :id")
     Optional<IssuedCoupon> findByIdForUpdate(Long id);
+
+    boolean existsByCouponIdAndUserId(Long couponId, Long userId);
 }
