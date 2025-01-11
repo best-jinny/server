@@ -38,6 +38,20 @@ public class PointTest {
     }
 
     @Test
+    @DisplayName("포인트 잔고가 0일 때 차감하면 NotEnoughException 이 발생한다")
+    void deduct_whenPointIsZero_throwNotEnoughException() {
+        // given
+        Point point = Point.builder()
+                .userId(1L)
+                .point(0L)
+                .build();
+
+        // when & then
+        assertThatThrownBy(() -> point.deduct(2000L))
+                .isInstanceOf(NotEnoughException.class);
+    }
+
+    @Test
     @DisplayName("5000 포인트가 있을 때 2000을 차감하면 3000이 남아야 한다")
     void deduct_whenSufficientPoint_thenPointDecreaseByGivenAmount() {
         // given
