@@ -12,6 +12,12 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
+@Table(
+        name = "issued_coupon",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"coupon_id", "user_id"})
+        }
+)
 @Entity
 public class IssuedCoupon extends BaseTimeEntity {
     @Id
@@ -28,6 +34,22 @@ public class IssuedCoupon extends BaseTimeEntity {
     private CouponStatus status; // VALID, USED
     private LocalDateTime issuedAt;
     private LocalDateTime expiredAt;
+
+    public static IssuedCoupon issue(Coupon coupon, Long userId, LocalDateTime expiredAt) {
+        if (!coupon.isIssueLimitExceeded()) {
+            throw new IllegalStateException("선착순 발급 마감");
+        }
+
+        IssuedCoupon issuedCoupon = new IssuedCoupon();
+        issuedCoupon.coupon = coupon;
+        issuedCoupon.userId = userId;
+        issuedCoupon.status = CouponStatus.VALID;
+        issuedCoupon.issuedAt = LocalDateTime.now();
+        issuedCoupon.expiredAt = expiredAt;
+
+        coupon.increaseIssuedCount();
+        return issuedCoupon;
+    }
 
     public void validate() {
         if(LocalDateTime.now().isAfter(expiredAt)) {

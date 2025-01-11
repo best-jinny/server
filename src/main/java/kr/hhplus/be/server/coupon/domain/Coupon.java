@@ -18,8 +18,17 @@ public class Coupon extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private DiscountType discountType;
     private int discountValue;
-    private int maxIssuedCount;
+    private int issueLimit;
     private int issuedCount;
+
+    @Builder
+    public Coupon(String name, DiscountType discountType, int discountValue, int issueLimit) {
+        this.name = name;
+        this.discountType = discountType;
+        this.discountValue = discountValue;
+        this.issueLimit = issueLimit;
+        this.issuedCount = 0;
+    }
 
     public Long calculateDiscountAmount(Long orderAmount) {
         return switch (discountType) {
@@ -28,13 +37,15 @@ public class Coupon extends BaseTimeEntity {
         };
     }
 
-    @Builder
-    public Coupon(String name, DiscountType discountType, int discountValue, int maxIssuedCount) {
-        this.name = name;
-        this.discountType = discountType;
-        this.discountValue = discountValue;
-        this.maxIssuedCount = maxIssuedCount;
-        this.issuedCount = 0;
+    public boolean isIssueLimitExceeded() {
+        return issueLimit <= issuedCount;
+    }
+
+    public void increaseIssuedCount() {
+        if(isIssueLimitExceeded()) {
+            throw new IllegalArgumentException("선착순 발급 마감");
+        }
+        this.issuedCount++;
     }
 
 }
