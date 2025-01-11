@@ -2,7 +2,6 @@ package kr.hhplus.be.server.order.domain;
 
 import jakarta.persistence.*;
 import kr.hhplus.be.server.common.entity.BaseTimeEntity;
-import kr.hhplus.be.server.user.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,10 +17,7 @@ public class Order extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "user_id", nullable = false)
-    @ManyToOne
-    private User user;
-
+    private Long userId;
     private Long totalPrice;
     private Long discountPrice;
     private Long finalPrice;
@@ -32,9 +28,9 @@ public class Order extends BaseTimeEntity {
     @CollectionTable(name="order_line", joinColumns = @JoinColumn(name="order_id"))
     private List<OrderLine> orderLines;
 
-    public static Order createOrder(User user, List<OrderLine> orderLines) {
+    public static Order createOrder(Long userId, List<OrderLine> orderLines) {
         Order order = new Order();
-        order.user = user;
+        order.userId = userId;
         order.orderLines = orderLines;
         order.status = OrderStatus.PENDING;
         order.totalPrice = order.calculateTotalPrice();
@@ -43,13 +39,18 @@ public class Order extends BaseTimeEntity {
         return order;
     }
 
-    public Long calculateTotalPrice() {
+    private Long calculateTotalPrice() {
         return orderLines.stream()
                 .mapToLong(OrderLine::getPrice)
                 .sum();
     }
 
     public void applyDiscount(Long discountPrice) {
+
+        if (discountPrice > this.totalPrice) {
+            discountPrice = this.totalPrice; // 할인 금액을 총 금액으로 제한
+        }
+
         this.discountPrice = discountPrice;
         this.finalPrice = this.totalPrice - discountPrice;
     }
