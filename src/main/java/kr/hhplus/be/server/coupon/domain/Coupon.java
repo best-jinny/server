@@ -3,6 +3,7 @@ package kr.hhplus.be.server.coupon.domain;
 import jakarta.persistence.*;
 import kr.hhplus.be.server.common.entity.BaseTimeEntity;
 import kr.hhplus.be.server.common.exceptions.InvalidCouponException;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,8 +25,16 @@ public class Coupon extends BaseTimeEntity {
         return switch (discountType) {
             case FIXED -> Math.min(orderAmount, discountValue);
             case PERCENTAGE -> (orderAmount * discountValue) / 100;
-            default -> throw new InvalidCouponException("할인 타입 오류");
         };
+    }
+
+    @Builder
+    public Coupon(String name, DiscountType discountType, int discountValue, int maxIssuedCount) {
+        this.name = name;
+        this.discountType = discountType;
+        this.discountValue = discountValue;
+        this.maxIssuedCount = maxIssuedCount;
+        this.issuedCount = 0;
     }
 
 }
