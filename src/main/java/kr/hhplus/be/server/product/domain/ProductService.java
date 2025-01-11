@@ -24,11 +24,7 @@ public class ProductService {
     public void validateProductPrices(List<ValidateProductPriceCommand> commands) {
         for (ValidateProductPriceCommand orderLineRequest : commands) {
             Product product = getProduct(orderLineRequest.getProductId());
-
-            // 상품 가격 검증
-            if (!product.getPrice().equals(orderLineRequest.getPrice())) {
-                throw new IllegalArgumentException("상품 가격이 변경되었습니다" + product.getId());
-            }
+            product.validatePrice(orderLineRequest.getPrice());
         }
     }
 }
