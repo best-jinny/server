@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import kr.hhplus.be.server.common.entity.BaseTimeEntity;
+import kr.hhplus.be.server.common.exceptions.NotEnoughException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,13 +28,11 @@ public class Point extends BaseTimeEntity {
     }
 
     public void deduct(Long amount) {
-        if(amount <= 0) {
-            //error
+        if(amount < 0) {
             throw new IllegalArgumentException();
         }
         if(this.point < amount) {
-            //error (잔액부족)
-            throw new RuntimeException();
+            throw new NotEnoughException("포인트가 부족합니다");
         }
         this.point -= amount;
     }
