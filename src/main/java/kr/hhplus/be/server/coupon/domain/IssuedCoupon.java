@@ -36,7 +36,7 @@ public class IssuedCoupon extends BaseTimeEntity {
     private LocalDateTime expiredAt;
 
     public static IssuedCoupon issue(Coupon coupon, Long userId, LocalDateTime expiredAt) {
-        if (!coupon.isIssueLimitExceeded()) {
+        if (coupon.isIssueLimitExceeded()) {
             throw new IllegalStateException("선착순 발급 마감");
         }
 

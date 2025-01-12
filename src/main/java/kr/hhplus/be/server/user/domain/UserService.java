@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
+    public void verify(Long userId) {
+        userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("유저가 없습니다"));
+    }
+
     public User getUser(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("유저가 없습니다"));
     }
