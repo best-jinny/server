@@ -3,6 +3,7 @@ package kr.hhplus.be.server.coupon.domain;
 import jakarta.persistence.*;
 import kr.hhplus.be.server.common.entity.BaseTimeEntity;
 import kr.hhplus.be.server.common.exceptions.InvalidCouponException;
+import kr.hhplus.be.server.common.exceptions.NotEnoughException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +23,12 @@ public class Coupon extends BaseTimeEntity {
     private int issuedCount;
 
     @Builder
-    public Coupon(String name, DiscountType discountType, int discountValue, int issueLimit) {
+    public Coupon(String name, DiscountType discountType, int discountValue, int issueLimit, int issuedCount) {
         this.name = name;
         this.discountType = discountType;
         this.discountValue = discountValue;
         this.issueLimit = issueLimit;
-        this.issuedCount = 0;
+        this.issuedCount = issuedCount;
     }
 
     public Long calculateDiscountAmount(Long orderAmount) {
@@ -37,14 +38,13 @@ public class Coupon extends BaseTimeEntity {
         };
     }
 
-    public boolean isIssueLimitExceeded() {
-        return issueLimit <= issuedCount;
+    public void validateIssueLimit() {
+        if (issueLimit <= issuedCount) {
+            throw new NotEnoughException("선착순 발급 마감");
+        }
     }
 
     public void increaseIssuedCount() {
-        if(isIssueLimitExceeded()) {
-            throw new IllegalArgumentException("선착순 발급 마감");
-        }
         this.issuedCount++;
     }
 
