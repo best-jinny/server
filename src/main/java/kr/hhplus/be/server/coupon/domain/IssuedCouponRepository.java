@@ -1,9 +1,12 @@
 package kr.hhplus.be.server.coupon.domain;
 
 import jakarta.persistence.LockModeType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IssuedCouponRepository {
@@ -14,4 +17,6 @@ public interface IssuedCouponRepository {
     Optional<IssuedCoupon> findByIdForUpdate(Long id);
 
     boolean existsByCouponIdAndUserId(Long couponId, Long userId);
+
+    Page<IssuedCoupon> findAllByUserId(Long userId, Pageable pageable);
 }
