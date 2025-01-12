@@ -16,7 +16,7 @@ public class IssuedCouponResult {
     private LocalDateTime issuedAt;
     private LocalDateTime expiredAt;
 
-    public static IssuedCouponResult from(IssuedCoupon coupon) {
+    public static IssuedCouponResult of(IssuedCoupon coupon) {
         return new IssuedCouponResult(
                 coupon.getId(),
                 coupon.getCoupon().getName(),

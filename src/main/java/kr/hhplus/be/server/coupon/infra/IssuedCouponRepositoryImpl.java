@@ -3,8 +3,11 @@ package kr.hhplus.be.server.coupon.infra;
 import kr.hhplus.be.server.coupon.domain.IssuedCoupon;
 import kr.hhplus.be.server.coupon.domain.IssuedCouponRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,6 +23,11 @@ public class IssuedCouponRepositoryImpl implements IssuedCouponRepository {
     @Override
     public boolean existsByCouponIdAndUserId(Long couponId, Long userId) {
         return issuedCouponJpaRepository.existsByCouponIdAndUserId(couponId, userId);
+    }
+
+    @Override
+    public Page<IssuedCoupon> findAllByUserId(Long userId, Pageable pageable) {
+        return issuedCouponJpaRepository.findAllByUserId(userId, pageable);
     }
 
     @Override
