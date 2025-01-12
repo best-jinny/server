@@ -40,6 +40,12 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
 	annotationProcessor("org.projectlombok:lombok:1.18.26")
 
+	// QueryDsl
+	implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
+	annotationProcessor("com.querydsl:querydsl-apt:5.0.0:jakarta")
+	annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+	annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+
     // DB
 	runtimeOnly("com.mysql:mysql-connector-j")
 
@@ -55,3 +61,23 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 	systemProperty("user.timezone", "UTC")
 }
+
+val generateDir = file("src/main/generated")
+
+tasks {
+	withType<JavaCompile> {
+		options.generatedSourceOutputDirectory = file(generateDir)
+	}
+	named("clean") {
+		doLast {
+			delete(generateDir)
+		}
+	}
+}
+
+sourceSets {
+	getByName("main") {
+		java.srcDir(generateDir)
+	}
+}
+
