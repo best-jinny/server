@@ -2,6 +2,10 @@ package kr.hhplus.be.server.product.domain;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +16,10 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public Page<ProductResult> getProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size); // todo 정렬?
+        Page<Product> productPage = productRepository.findAll(pageable);
+        return productPage.map(ProductResult::of);
     }
 
     public Product getProduct(Long productId) {
