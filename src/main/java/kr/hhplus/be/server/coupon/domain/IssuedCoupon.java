@@ -3,6 +3,7 @@ package kr.hhplus.be.server.coupon.domain;
 import jakarta.persistence.*;
 import kr.hhplus.be.server.common.entity.BaseTimeEntity;
 import kr.hhplus.be.server.common.exceptions.InvalidCouponException;
+import kr.hhplus.be.server.common.exceptions.NotEnoughException;
 import kr.hhplus.be.server.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,9 +37,8 @@ public class IssuedCoupon extends BaseTimeEntity {
     private LocalDateTime expiredAt;
 
     public static IssuedCoupon issue(Coupon coupon, Long userId, LocalDateTime expiredAt) {
-        if (coupon.isIssueLimitExceeded()) {
-            throw new IllegalStateException("선착순 발급 마감");
-        }
+        coupon.validateIssueLimit();
+        coupon.increaseIssuedCount();
 
         IssuedCoupon issuedCoupon = new IssuedCoupon();
         issuedCoupon.coupon = coupon;
@@ -47,16 +47,22 @@ public class IssuedCoupon extends BaseTimeEntity {
         issuedCoupon.issuedAt = LocalDateTime.now();
         issuedCoupon.expiredAt = expiredAt;
 
-        coupon.increaseIssuedCount();
         return issuedCoupon;
     }
 
     public void validate() {
-        if(LocalDateTime.now().isAfter(expiredAt)) {
+        validateExpiry();
+        validateUsage();
+    }
+
+    private void validateExpiry() {
+        if (LocalDateTime.now().isAfter(expiredAt)) {
             throw new InvalidCouponException("만료된 쿠폰입니다");
         }
+    }
 
-        if(status == CouponStatus.USED) {
+    private void validateUsage() {
+        if (status == CouponStatus.USED) {
             throw new InvalidCouponException("이미 사용된 쿠폰입니다");
         }
     }
