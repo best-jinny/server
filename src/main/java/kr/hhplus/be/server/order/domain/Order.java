@@ -24,8 +24,8 @@ public class Order extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @ElementCollection
-    @CollectionTable(name="order_line", joinColumns = @JoinColumn(name="order_id"))
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id")
     private List<OrderLine> orderLines;
 
     public static Order createOrder(Long userId, List<OrderLine> orderLines) {
