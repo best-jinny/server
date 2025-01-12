@@ -1,9 +1,12 @@
 package kr.hhplus.be.server.coupon.interfaces.controller;
 
+import jakarta.validation.Valid;
 import kr.hhplus.be.server.coupon.domain.IssuedCoupon;
+import kr.hhplus.be.server.coupon.domain.IssuedCouponResult;
 import kr.hhplus.be.server.coupon.facade.CouponFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.ZonedDateTime;
@@ -11,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api/v1/coupons")
 @RequiredArgsConstructor
@@ -20,14 +24,8 @@ public class CouponController {
 
     // 쿠폰 발급
     @PostMapping
-    public ResponseEntity<?> issue(@RequestBody CouponIssueRequest request) {
-        if (request.getUserId() == null || request.getCouponId() == null ) {
-            return ResponseEntity.badRequest().body("유효하지 않은 요청입니다.");
-        }
-
-        IssuedCoupon coupon = couponFacade.issueCoupon(request.getUserId(), request.getCouponId());
-
-        CouponIssueResponse response = new CouponIssueResponse();
+    public ResponseEntity<?> issue(@Valid @RequestBody CouponIssueRequest request) {
+        IssuedCouponResult coupon = couponFacade.issueCoupon(request.getCouponId(), request.getUserId());
         return ResponseEntity.ok(coupon);
     }
 

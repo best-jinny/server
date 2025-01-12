@@ -37,15 +37,16 @@ public class CouponService {
     }
 
     @Transactional
-    public IssuedCoupon issueCoupon(Long userId, Long couponId) {
+    public IssuedCouponResult issueCoupon(Long couponId, Long userId) {
         Coupon coupon = getCouponWithLock(couponId);
         boolean alreadyIssued = issuedCouponRepository.existsByCouponIdAndUserId(coupon.getId(), userId);
         if (alreadyIssued) {
-            throw new IllegalStateException("이미 발급 받았습니다.");
+            throw new IllegalStateException("이미 발급 받았습니..........");
         }
         try {
             IssuedCoupon issuedCoupon = IssuedCoupon.issue(coupon, userId, LocalDateTime.now().plusDays(30));
-            return issuedCouponRepository.save(issuedCoupon);
+            issuedCouponRepository.save(issuedCoupon);
+            return IssuedCouponResult.from(issuedCoupon);
         } catch (DataIntegrityViolationException e) {
             throw new IllegalStateException("이미 발급된 쿠폰입니다.");
         }
