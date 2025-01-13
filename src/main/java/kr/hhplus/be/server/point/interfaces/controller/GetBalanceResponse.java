@@ -6,6 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetBalanceResponse {
-    private Long userId;
-    private Integer balance;
+    private Long balance;
 }

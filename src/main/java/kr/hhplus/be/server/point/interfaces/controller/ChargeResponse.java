@@ -6,7 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ChargeResponse {
-    private Long userId;
-    private Integer balance;
-
+    private Long point;
 }

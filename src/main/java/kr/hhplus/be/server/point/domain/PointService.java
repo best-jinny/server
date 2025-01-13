@@ -16,4 +16,16 @@ public class PointService {
         pointRepository.save(point);
     }
 
+    /* 충전 */
+    public PointResult charge(Long userId, Long amount) {
+        Point point = pointRepository.findByUserId(userId).orElseThrow(IllegalArgumentException::new);
+        point.charge(amount);
+        pointRepository.save(point);
+        return PointResult.of(point);
+    }
+
+    public PointResult getBalance(Long userId) {
+        Point point = pointRepository.findByUserId(userId).orElseThrow(IllegalArgumentException::new);
+        return PointResult.of(point);
+    }
 }
