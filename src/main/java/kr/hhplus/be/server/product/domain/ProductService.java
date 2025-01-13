@@ -18,8 +18,7 @@ public class ProductService {
 
     public Page<ProductResult> getProducts(int page, int size) {
         Pageable pageable = PageRequest.of(page, size); // todo 정렬?
-        Page<Product> productPage = productRepository.findAll(pageable);
-        return productPage.map(ProductResult::of);
+        return productRepository.findWithStock(pageable);
     }
 
     public Product getProduct(Long productId) {
