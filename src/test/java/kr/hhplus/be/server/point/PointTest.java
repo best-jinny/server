@@ -66,4 +66,20 @@ public class PointTest {
         // then
         assertThat(point.getPoint()).isEqualTo(3000L);
     }
+
+    @Test
+    @DisplayName("5000 포인트가 있을 때 3000을 충전하면 잔고가 8000 이 되어야한다")
+    void charge_whenChargeAmount_thenPointIncreaseByGivenAmount() {
+        // given
+        Point point = Point.builder()
+                .userId(1L)
+                .point(5000L)
+                .build();
+
+        // when
+        point.charge(3000L);
+
+        // then
+        assertThat(point.getPoint()).isEqualTo(8000L);
+    }
 }

@@ -1,31 +1,34 @@
 package kr.hhplus.be.server.point.interfaces.controller;
 
+import jakarta.validation.Valid;
+import kr.hhplus.be.server.point.domain.PointResult;
+import kr.hhplus.be.server.point.facade.PointFacade;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Validated
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/points")
 public class PointController {
 
+    private final PointFacade pointFacade;
+
     // 잔액 충전
     @PostMapping
-    public ResponseEntity<?> charge(@RequestBody ChargeRequest request) {
-        if (request.getAmount() == null || request.getAmount() <= 0) {
-            return ResponseEntity.badRequest().body("유효하지 않은 요청입니다.");
-        }
-
-        ChargeResponse response = new ChargeResponse(1L, 50000);
+    public ResponseEntity<?> charge(@Valid @RequestBody ChargeRequest request) {
+        PointResult result = pointFacade.charge(request.getUserId(), request.getAmount());
+        ChargeResponse response = new ChargeResponse(result.getPoint());
         return ResponseEntity.ok(response);
-
     }
 
     // 잔액 조회
-    @GetMapping("/balance")
-    public ResponseEntity<?> getBalance(@RequestParam Long userId) {
-        if (userId == null) {
-            return ResponseEntity.badRequest().body("유효하지 않은 사용자 ID 입니다.");
-        }
-        GetBalanceResponse response = new GetBalanceResponse(userId, 50000);
+    @GetMapping("/balance/{userId}")
+    public ResponseEntity<?> getBalance(@PathVariable("userId") Long userId) {
+        PointResult result = pointFacade.getBalance(userId);
+        GetBalanceResponse response = new GetBalanceResponse(result.getPoint());
         return ResponseEntity.ok(response);
     }
 

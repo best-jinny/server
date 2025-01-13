@@ -36,4 +36,8 @@ public class Point extends BaseTimeEntity {
         }
         this.point -= amount;
     }
+
+    public void charge(Long amount) {
+        this.point += amount;
+    }
 }
