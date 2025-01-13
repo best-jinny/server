@@ -6,7 +6,6 @@ import kr.hhplus.be.server.order.domain.TopProductsResult;
 import kr.hhplus.be.server.order.facade.OrderCriteria;
 import kr.hhplus.be.server.order.facade.OrderFacade;
 import kr.hhplus.be.server.order.facade.OrderResult;
-import kr.hhplus.be.server.product.interfaces.controller.TopSellerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

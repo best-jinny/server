@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface ProductRepository {
     Page<Product> findAll(Pageable pageable);
     Optional<Product> findById(Long id);
+    Page<ProductResult> findWithStock(Pageable pageable);
 }
