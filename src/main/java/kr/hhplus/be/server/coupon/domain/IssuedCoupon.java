@@ -2,9 +2,8 @@ package kr.hhplus.be.server.coupon.domain;
 
 import jakarta.persistence.*;
 import kr.hhplus.be.server.common.entity.BaseTimeEntity;
-import kr.hhplus.be.server.common.exceptions.InvalidCouponException;
-import kr.hhplus.be.server.common.exceptions.NotEnoughException;
-import kr.hhplus.be.server.user.domain.User;
+import kr.hhplus.be.server.common.exceptions.ConflictException;
+import kr.hhplus.be.server.common.exceptions.InvalidException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,13 +56,13 @@ public class IssuedCoupon extends BaseTimeEntity {
 
     private void validateExpiry() {
         if (LocalDateTime.now().isAfter(expiredAt)) {
-            throw new InvalidCouponException("만료된 쿠폰입니다");
+            throw new InvalidException("만료된 쿠폰입니다.");
         }
     }
 
     private void validateUsage() {
         if (status == CouponStatus.USED) {
-            throw new InvalidCouponException("이미 사용된 쿠폰입니다");
+            throw new ConflictException("이미 사용된 쿠폰입니다.");
         }
     }
 

@@ -1,7 +1,9 @@
 package kr.hhplus.be.server.common.exceptions;
 
-public class InvalidException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class InvalidException extends BusinessException {
     public InvalidException(String message) {
-        super(message);
+        super(HttpStatus.BAD_REQUEST, message);
     }
 }

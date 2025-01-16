@@ -1,5 +1,6 @@
 package kr.hhplus.be.server.point;
 
+import kr.hhplus.be.server.common.exceptions.InvalidException;
 import kr.hhplus.be.server.common.exceptions.NotEnoughException;
 import kr.hhplus.be.server.point.domain.Point;
 import org.junit.jupiter.api.DisplayName;
@@ -10,8 +11,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class PointTest {
     @Test
-    @DisplayName("음수 포인트를 차감하려고 하면 IllegalArgumentException 이 발생한다")
-    void deduct_whenGivenNegativeAmount_thenThrowIllegalArgumentException() {
+    @DisplayName("음수 포인트를 차감하려고 하면 InvalidException 이 발생한다")
+    void deduct_whenGivenNegativeAmount_thenThrowInvalidException() {
         // given
         Point point = Point.builder()
                 .userId(1L)
@@ -20,7 +21,7 @@ public class PointTest {
 
         // when & then
         assertThatThrownBy(() -> point.deduct(-2000L))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidException.class);
     }
 
     @Test

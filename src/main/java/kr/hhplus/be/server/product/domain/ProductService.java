@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.product.domain;
 
 import jakarta.persistence.EntityNotFoundException;
+import kr.hhplus.be.server.common.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +24,7 @@ public class ProductService {
 
     public Product getProduct(Long productId) {
         return productRepository.findById(productId)
-                .orElseThrow(() -> new EntityNotFoundException("상품이 존재하지 않습니다"));
+                .orElseThrow(() -> new NotFoundException("상품을 찾을 수 없습니다."));
     }
 
     public void validateProductPrices(List<ValidateProductPriceCommand> commands) {

@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.stock;
 
 
+import kr.hhplus.be.server.common.exceptions.InvalidException;
 import kr.hhplus.be.server.common.exceptions.NotEnoughException;
 import kr.hhplus.be.server.stock.domain.Stock;
 import org.junit.jupiter.api.DisplayName;
@@ -49,8 +50,8 @@ public class StockTest {
     }
 
     @Test
-    @DisplayName("음수나 0인 수량이 주어지면 IllegalArgumentException 이 발생한다")
-    void deduct_whenGivenNegativeAmount_thenThrowIllegalArgumentException() {
+    @DisplayName("음수나 0인 수량이 주어지면 InvalidException 이 발생한다")
+    void deduct_whenGivenNegativeAmount_thenThrowInvalidException() {
         // given
         Stock stock = Stock.builder()
                 .quantity(100)
@@ -58,10 +59,10 @@ public class StockTest {
 
         // when & then
         assertThatThrownBy(() -> stock.deduct(-1))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidException.class);
 
         // when & then
         assertThatThrownBy(() -> stock.deduct(0))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidException.class);
     }
 }

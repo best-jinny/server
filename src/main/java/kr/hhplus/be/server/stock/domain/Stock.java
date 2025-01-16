@@ -30,10 +30,10 @@ public class Stock extends BaseTimeEntity {
 
     public void deduct(int amount) {
         if(amount <= 0) {
-            throw new IllegalArgumentException("유효하지 않은 수량");
+            throw new InvalidException("유효하지 않은 수량입니다.");
         }
         if(this.quantity - amount < 0) {
-            throw new NotEnoughException("재고가 부족합니다");
+            throw new NotEnoughException("재고가 부족합ㄴ디ㅏ.");
         }
         this.quantity -= amount;
     }

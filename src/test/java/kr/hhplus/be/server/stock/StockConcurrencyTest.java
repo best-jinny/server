@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.stock;
 
 import jakarta.persistence.EntityNotFoundException;
+import kr.hhplus.be.server.common.exceptions.NotFoundException;
 import kr.hhplus.be.server.stock.domain.DeductStockCommand;
 import kr.hhplus.be.server.stock.domain.Stock;
 import kr.hhplus.be.server.stock.domain.StockRepository;
@@ -63,7 +64,7 @@ public class StockConcurrencyTest {
         executorService.shutdown();
 
         Stock afterStock = stockRepository.findByProductId(productId)
-                .orElseThrow(() -> new EntityNotFoundException("제품이 없습니다"));
+                .orElseThrow(() -> new EntityNotFoundException("상품이 없습니다"));
         assertThat(afterStock.getQuantity()).isEqualTo(0);
 
     }
@@ -109,7 +110,7 @@ public class StockConcurrencyTest {
 
         // 결과
         Stock afterStock = stockRepository.findByProductId(productId)
-                .orElseThrow(() -> new EntityNotFoundException("제품이 없습니다"));
+                .orElseThrow(() -> new NotFoundException("상품이 없습니다"));
 
         // 검증: 최종 재고는 10 이어야 함
         assertThat(afterStock.getQuantity()).isEqualTo(10);
