@@ -1,7 +1,9 @@
 package kr.hhplus.be.server.common.exceptions;
 
-public class NotEnoughException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class NotEnoughException extends BusinessException {
     public NotEnoughException(String message) {
-        super(message);
+        super(HttpStatus.BAD_REQUEST, message);
     }
 }

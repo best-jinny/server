@@ -2,7 +2,6 @@ package kr.hhplus.be.server.coupon.domain;
 
 import jakarta.persistence.*;
 import kr.hhplus.be.server.common.entity.BaseTimeEntity;
-import kr.hhplus.be.server.common.exceptions.InvalidCouponException;
 import kr.hhplus.be.server.common.exceptions.NotEnoughException;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,7 +39,7 @@ public class Coupon extends BaseTimeEntity {
 
     public void validateIssueLimit() {
         if (issueLimit <= issuedCount) {
-            throw new NotEnoughException("선착순 발급 마감");
+            throw new NotEnoughException("선착순 마감되었습니다.");
         }
     }
 

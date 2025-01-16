@@ -1,5 +1,6 @@
 package kr.hhplus.be.server.payment.domain;
 
+import kr.hhplus.be.server.common.exceptions.InvalidException;
 import kr.hhplus.be.server.point.domain.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class PaymentProcessorFactory {
             case POINT -> {
                 return new PointPaymentProcessor(pointService);
             }
-            default -> throw new RuntimeException("지원하지 않는 결제 방법");
+            default -> throw new InvalidException("지원하지 않는 결제 방법입니다.");
         }
     }
 }
