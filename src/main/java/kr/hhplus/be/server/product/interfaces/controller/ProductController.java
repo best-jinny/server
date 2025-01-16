@@ -1,7 +1,6 @@
 package kr.hhplus.be.server.product.interfaces.controller;
 
 import kr.hhplus.be.server.common.dto.PageResponse;
-import kr.hhplus.be.server.order.domain.OrderService;
 import kr.hhplus.be.server.product.domain.ProductResult;
 import kr.hhplus.be.server.product.domain.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/products")
 public class ProductController {
     private final ProductService productService;
-    private final OrderService orderService;
 
     // 전체 상품 조회
     @GetMapping()

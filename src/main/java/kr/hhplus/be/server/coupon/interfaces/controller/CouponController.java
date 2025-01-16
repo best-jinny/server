@@ -22,7 +22,7 @@ public class CouponController {
     @PostMapping
     public ResponseEntity<?> issue(@Valid @RequestBody CouponIssueRequest request) {
         IssuedCouponResult coupon = couponFacade.issueCoupon(request.getCouponId(), request.getUserId());
-        return ResponseEntity.ok(coupon);
+        return ResponseEntity.ok(CouponIssueResponse.of(coupon));
     }
 
     // 사용 가능 쿠폰 조회

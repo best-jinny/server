@@ -10,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -20,7 +19,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@Testcontainers
 public class StockConcurrencyTest {
 
     @Autowired
@@ -33,7 +31,7 @@ public class StockConcurrencyTest {
     @DisplayName("동시에 10개의 스레드에서 10개의 재고를 차감하면 0개가 남아야한다")
     void testStockConcurrency() throws InterruptedException {
 
-        Long productId = 1L;
+        Long productId = 10L;
         int quantity = 100;
 
         Stock stock = Stock.builder()
@@ -73,7 +71,7 @@ public class StockConcurrencyTest {
     @DisplayName("동시에 10개의 스레드에서 15개의 재고를 차감하면 최종 재고는 10개가 남고 성공 횟수 6, 실패 4 가 기록되어야한다")
     void testOverDeduction() throws InterruptedException {
 
-        Long productId = 2L;
+        Long productId = 20L;
         int quantity = 100;
 
         Stock stock = Stock.builder()

@@ -2,11 +2,13 @@ package kr.hhplus.be.server.coupon.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class IssuedCouponResult {
     private Long id;
     private String couponName;
