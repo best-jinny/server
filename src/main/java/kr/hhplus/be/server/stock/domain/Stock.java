@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import kr.hhplus.be.server.common.entity.BaseTimeEntity;
 import kr.hhplus.be.server.common.exceptions.InvalidException;
 import kr.hhplus.be.server.common.exceptions.NotEnoughException;
-import kr.hhplus.be.server.product.domain.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +17,7 @@ public class Stock extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private Long productId;
 
     private int quantity;
@@ -33,7 +33,7 @@ public class Stock extends BaseTimeEntity {
             throw new InvalidException("유효하지 않은 수량입니다.");
         }
         if(this.quantity - amount < 0) {
-            throw new NotEnoughException("재고가 부족합ㄴ디ㅏ.");
+            throw new NotEnoughException("재고가 부족합니다.");
         }
         this.quantity -= amount;
     }

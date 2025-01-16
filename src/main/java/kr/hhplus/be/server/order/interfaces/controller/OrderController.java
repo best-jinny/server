@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Validated
@@ -25,11 +24,11 @@ public class OrderController {
 
     // 주문
     @PostMapping
-    public ResponseEntity<OrderResult> order(@Valid @RequestBody OrderRequest request) {
+    public ResponseEntity<OrderResponse> order(@Valid @RequestBody OrderRequest request) {
 
         OrderResult orderResult = orderFacade.processImmediatePayOrder(OrderCriteria.of(request));
 
-        return ResponseEntity.ok(orderResult);
+        return ResponseEntity.ok(OrderResponse.of(orderResult));
     }
 
     // 최근 3일간 판매량 top 5 상품 조회

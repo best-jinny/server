@@ -58,4 +58,9 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         return new PageImpl<>(results, pageable, total);
     }
+
+    @Override
+    public Product save(Product product) {
+        return productJpaRepository.save(product);
+    }
 }
