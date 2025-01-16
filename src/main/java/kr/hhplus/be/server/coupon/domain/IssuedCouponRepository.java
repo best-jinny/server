@@ -16,6 +16,8 @@ public interface IssuedCouponRepository {
     @Query("SELECT ic FROM IssuedCoupon ic WHERE ic.id = :id")
     Optional<IssuedCoupon> findByIdForUpdate(Long id);
 
+    Optional<IssuedCoupon> findById(Long id);
+
     boolean existsByCouponIdAndUserId(Long couponId, Long userId);
 
     Page<IssuedCoupon> findAllByUserId(Long userId, Pageable pageable);

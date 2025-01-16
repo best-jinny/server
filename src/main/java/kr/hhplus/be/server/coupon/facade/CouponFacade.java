@@ -1,6 +1,7 @@
 package kr.hhplus.be.server.coupon.facade;
 
 import kr.hhplus.be.server.coupon.domain.CouponService;
+import kr.hhplus.be.server.coupon.domain.IssueCouponCommand;
 import kr.hhplus.be.server.coupon.domain.IssuedCouponResult;
 import kr.hhplus.be.server.user.domain.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class CouponFacade {
     @Transactional
     public IssuedCouponResult issueCoupon(Long couponId, Long userId) {
         userService.verify(userId);
-        return couponService.issueCoupon(couponId, userId);
+        return couponService.issueCoupon(new IssueCouponCommand(couponId, userId));
     }
 
     public Page<IssuedCouponResult> getIssuedCoupons(Long userId, int page, int size) {
