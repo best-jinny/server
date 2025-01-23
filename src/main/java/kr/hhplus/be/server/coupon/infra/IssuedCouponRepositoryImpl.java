@@ -36,6 +36,11 @@ public class IssuedCouponRepositoryImpl implements IssuedCouponRepository {
     }
 
     @Override
+    public Long countByCouponId(Long couponId) {
+        return issuedCouponJpaRepository.countIssuedCouponByCouponId(couponId);
+    }
+
+    @Override
     public IssuedCoupon save(IssuedCoupon coupon) {
        return issuedCouponJpaRepository.save(coupon);
     }

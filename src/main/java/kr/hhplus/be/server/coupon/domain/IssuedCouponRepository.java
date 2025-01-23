@@ -21,4 +21,6 @@ public interface IssuedCouponRepository {
     boolean existsByCouponIdAndUserId(Long couponId, Long userId);
 
     Page<IssuedCoupon> findAllByUserId(Long userId, Pageable pageable);
+
+    Long countByCouponId(Long couponId);
 }

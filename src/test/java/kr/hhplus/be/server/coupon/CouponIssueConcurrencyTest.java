@@ -75,5 +75,52 @@ public class CouponIssueConcurrencyTest {
 
     }
 
+    @Test
+    @DisplayName("REDIS : 최대 발급 수량이 10개인 쿠폰에 대해 동시에 100건의 쿠폰 발급을 요청하면 10개는 성공하고 90개는 실패한다")
+    void testCouponIssueWithRedis() throws InterruptedException {
+
+        Coupon coupon = Coupon.builder()
+                .issueLimit(10)
+                .issuedCount(0)
+                .build();
+
+        couponRepository.save(coupon);
+
+        int threadCount = 100;
+
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+
+        AtomicInteger successCount = new AtomicInteger(0); // 성공 카운터
+        AtomicInteger failureCount = new AtomicInteger(0); // 실패 카운터
+
+        for (long i = 0; i < threadCount; i++) {
+            long userId = i + 1; // 각 스레드마다 고유 유저 ID 생성
+            executorService.execute(() -> {
+                try {
+                    IssueCouponCommand command = new IssueCouponCommand(coupon.getId(), userId);
+                    couponService.issueCouponWithRedisLock(command);
+                    successCount.incrementAndGet();
+                } catch (Exception e) {
+                    failureCount.incrementAndGet();
+                    System.err.println("예외 발생: " + e.getMessage());
+                } finally {
+                    latch.countDown(); // 작업 완료
+                }
+            });
+        }
+
+        latch.await();
+        executorService.shutdown();
+
+        Coupon afterCoupon = couponRepository.findById(coupon.getId()).orElseThrow(() -> new NotFoundException("쿠폰이 없습니다"));
+
+        assertThat(afterCoupon.getIssuedCount()).isEqualTo(10);
+
+        assertThat(successCount.get()).isEqualTo(10);
+        assertThat(failureCount.get()).isEqualTo(90);
+
+    }
+
 
 }

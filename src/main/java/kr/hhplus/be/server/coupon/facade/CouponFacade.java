@@ -19,8 +19,8 @@ public class CouponFacade {
 
     @Transactional
     public IssuedCouponResult issueCoupon(Long couponId, Long userId) {
-        userService.verify(userId);
-        return couponService.issueCoupon(new IssueCouponCommand(couponId, userId));
+        //userService.verify(userId);
+        return couponService.issueCouponWithRedisLock(new IssueCouponCommand(couponId, userId));
     }
 
     public Page<IssuedCouponResult> getIssuedCoupons(Long userId, int page, int size) {
