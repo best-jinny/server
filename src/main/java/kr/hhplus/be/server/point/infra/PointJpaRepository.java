@@ -1,10 +1,21 @@
 package kr.hhplus.be.server.point.infra;
 
+import jakarta.persistence.LockModeType;
 import kr.hhplus.be.server.point.domain.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
 public interface PointJpaRepository extends JpaRepository<Point, Long> {
+
     Optional<Point> findByUserId(Long userId);
+
+    @Lock(LockModeType.OPTIMISTIC)
+    @Query("SELECT p FROM Point p WHERE p.userId = :userId")
+    Optional<Point> findByUserIdForUpdate(@Param("userId") Long userId);
+
+
 }

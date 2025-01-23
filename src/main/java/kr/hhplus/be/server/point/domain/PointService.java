@@ -2,6 +2,7 @@ package kr.hhplus.be.server.point.domain;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -10,15 +11,17 @@ public class PointService {
     private final PointRepository pointRepository;
 
     /* 잔액 차감 */
+    @Transactional
     public void deduct (Long userId, Long amount) {
-        Point point = pointRepository.findByUserId(userId).orElseThrow(IllegalArgumentException::new);
+        Point point = pointRepository.findByUserIdForUpdate(userId).orElseThrow(IllegalArgumentException::new);
         point.deduct(amount);
         pointRepository.save(point);
     }
 
     /* 충전 */
+    @Transactional
     public PointResult charge(Long userId, Long amount) {
-        Point point = pointRepository.findByUserId(userId).orElseThrow(IllegalArgumentException::new);
+        Point point = pointRepository.findByUserIdForUpdate(userId).orElseThrow(IllegalArgumentException::new);
         point.charge(amount);
         pointRepository.save(point);
         return PointResult.of(point);
