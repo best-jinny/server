@@ -8,6 +8,7 @@ import kr.hhplus.be.server.product.domain.ProductRepository;
 import kr.hhplus.be.server.product.domain.ProductResult;
 import kr.hhplus.be.server.stock.domain.Stock;
 import kr.hhplus.be.server.stock.domain.StockRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,12 @@ public class ProductIntegrationTest {
 
     @Autowired
     private StockRepository stockRepository;
+
+    @AfterEach
+    void tearDown() {
+        stockRepository.deleteAll();
+        productRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("상품 조회시 id, name, price, stock 을 포함한 전체 상품 목록이 조회된다")

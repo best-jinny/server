@@ -41,6 +41,11 @@ public class IssuedCouponRepositoryImpl implements IssuedCouponRepository {
     }
 
     @Override
+    public void deleteAll() {
+        issuedCouponJpaRepository.deleteAllInBatch();
+    }
+
+    @Override
     public IssuedCoupon save(IssuedCoupon coupon) {
        return issuedCouponJpaRepository.save(coupon);
     }

@@ -1,7 +1,10 @@
 package kr.hhplus.be.server.point;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import kr.hhplus.be.server.point.domain.Point;
 import kr.hhplus.be.server.point.domain.PointRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +27,16 @@ public class PointConcurrencyTest {
 
     @Autowired
     private PointRepository pointRepository;
+
+    @AfterEach
+    void tearDown() {
+        pointRepository.deleteAll();
+    }
     
     @Test
     @DisplayName("동시에 포인트 충전과 차감이 이뤄지면 하나는 실패하고 하나는 성공한다")
     void testPointConcurrency() throws InterruptedException {
-        Long userId = 1L;
+        Long userId = 10L;
         Long amount = 10000L;
 
         Point point = Point.builder()

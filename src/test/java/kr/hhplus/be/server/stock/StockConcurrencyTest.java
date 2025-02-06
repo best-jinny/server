@@ -6,6 +6,7 @@ import kr.hhplus.be.server.stock.domain.DeductStockCommand;
 import kr.hhplus.be.server.stock.domain.Stock;
 import kr.hhplus.be.server.stock.domain.StockRepository;
 import kr.hhplus.be.server.stock.domain.StockService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class StockConcurrencyTest {
 
     @Autowired
     private StockService stockService;
+
+    @AfterEach
+    void tearDown() {
+        stockRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("동시에 10개의 스레드에서 10개의 재고를 차감하면 0개가 남아야한다")

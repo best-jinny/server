@@ -6,4 +6,5 @@ public interface PointRepository {
     Optional<Point> findByUserId(Long userId);
     Optional<Point> findByUserIdForUpdate(Long userId);
     Point save(Point point);
+    void deleteAll();
 }

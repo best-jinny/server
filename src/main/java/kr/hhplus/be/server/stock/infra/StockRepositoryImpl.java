@@ -27,4 +27,9 @@ public class StockRepositoryImpl implements StockRepository {
     public void save(Stock stock) {
         stockJpaRepository.save(stock);
     }
+
+    @Override
+    public void deleteAll() {
+        stockJpaRepository.deleteAllInBatch();
+    }
 }

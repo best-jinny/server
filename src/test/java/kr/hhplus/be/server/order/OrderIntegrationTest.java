@@ -13,6 +13,7 @@ import kr.hhplus.be.server.stock.domain.Stock;
 import kr.hhplus.be.server.stock.domain.StockRepository;
 import kr.hhplus.be.server.user.domain.User;
 import kr.hhplus.be.server.user.domain.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,6 +57,17 @@ public class OrderIntegrationTest {
 
     @Autowired
     private IssuedCouponRepository issuedCouponRepository;
+
+    @AfterEach
+    void tearDown() {
+        issuedCouponRepository.deleteAll();
+        couponRepository.deleteAll();
+        stockRepository.deleteAll();
+        productRepository.deleteAll();
+        pointRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+
 
     @Test
     @DisplayName("즉시 결제 주문을 성공적으로 처리한다 - 할인 쿠폰 없음")

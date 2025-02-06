@@ -8,6 +8,7 @@ import kr.hhplus.be.server.coupon.interfaces.controller.CouponIssueRequest;
 import kr.hhplus.be.server.coupon.interfaces.controller.CouponIssueResponse;
 import kr.hhplus.be.server.user.domain.User;
 import kr.hhplus.be.server.user.domain.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,14 @@ public class CouponIntegrationTest {
 
     @Autowired
     private IssuedCouponRepository issuedCouponRepository;
+
+    @AfterEach
+    void tearDown() {
+        issuedCouponRepository.deleteAll();
+        couponRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+
 
     @Autowired
     private MockMvc mockMvc;
