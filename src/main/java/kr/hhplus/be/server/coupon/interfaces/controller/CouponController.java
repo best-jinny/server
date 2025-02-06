@@ -2,6 +2,8 @@ package kr.hhplus.be.server.coupon.interfaces.controller;
 
 import jakarta.validation.Valid;
 import kr.hhplus.be.server.common.dto.PageResponse;
+import kr.hhplus.be.server.coupon.domain.CouponIssuanceResponse;
+import kr.hhplus.be.server.coupon.domain.CouponStrategy;
 import kr.hhplus.be.server.coupon.domain.IssuedCouponResult;
 import kr.hhplus.be.server.coupon.facade.CouponFacade;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +20,11 @@ public class CouponController {
 
     private final CouponFacade couponFacade;
 
-    // 쿠폰 발급
     @PostMapping
     public ResponseEntity<?> issue(@Valid @RequestBody CouponIssueRequest request) {
-        IssuedCouponResult coupon = couponFacade.issueCoupon(request.getCouponId(), request.getUserId());
-        return ResponseEntity.ok(CouponIssueResponse.of(coupon));
+        CouponIssuanceResponse coupon = couponFacade.issueCoupon(CouponStrategy.DB.name(), request.getCouponId(), request.getUserId());
+        IssuedCouponResult response= coupon.getCouponResult();
+        return ResponseEntity.ok(CouponIssueResponse.of(response));
     }
 
     // 사용 가능 쿠폰 조회
