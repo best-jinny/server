@@ -1,24 +1,20 @@
 package kr.hhplus.be.server.coupon.domain;
 
-import jakarta.persistence.LockModeType;
 import kr.hhplus.be.server.common.exceptions.InvalidException;
-import kr.hhplus.be.server.common.exceptions.NotFoundException;
-import kr.hhplus.be.server.config.redis.RedisLock;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CouponService {
+
     private final CouponRepository couponRepository;
     private final IssuedCouponRepository issuedCouponRepository;
 
@@ -39,57 +35,6 @@ public class CouponService {
         issuedCouponRepository.save(issuedCoupon);
     }
 
-    @Transactional
-    public IssuedCouponResult issueCoupon(IssueCouponCommand issueCouponCommand) {
-        Coupon coupon = getCouponWithLock(issueCouponCommand.getCouponId());
-        boolean alreadyIssued = issuedCouponRepository.existsByCouponIdAndUserId(coupon.getId(), issueCouponCommand.getUserId());
-        if (alreadyIssued) {
-            throw new InvalidException("이미 발급된 쿠폰입니다.");
-        }
-        try {
-            IssuedCoupon issuedCoupon = IssuedCoupon.issue(coupon, issueCouponCommand.getUserId(), LocalDateTime.now().plusDays(30));
-            issuedCouponRepository.save(issuedCoupon);
-            return IssuedCouponResult.of(issuedCoupon);
-        } catch (DataIntegrityViolationException e) {
-            throw new InvalidException("이미 발급된 쿠폰입니다.");
-        }
-    }
-
-    @RedisLock
-    @Transactional
-    public IssuedCouponResult issueCouponWithRedisLock(IssueCouponCommand issueCouponCommand) {
-        Coupon coupon = getCoupon(issueCouponCommand.getCouponId());
-
-        // 현재 발급된 쿠폰 수 확인
-        long issuedCount = issuedCouponRepository.countByCouponId(coupon.getId());
-        if (issuedCount >= 100) {
-            throw new InvalidException("발급 가능한 쿠폰 수를 초과했습니다.");
-        }
-
-        boolean alreadyIssued = issuedCouponRepository.existsByCouponIdAndUserId(coupon.getId(), issueCouponCommand.getUserId());
-        if (alreadyIssued) {
-            throw new InvalidException("이미 발급된 쿠폰입니다.");
-        }
-        try {
-            IssuedCoupon issuedCoupon = IssuedCoupon.issue(coupon, issueCouponCommand.getUserId(), LocalDateTime.now().plusDays(30));
-            issuedCouponRepository.save(issuedCoupon);
-            return IssuedCouponResult.of(issuedCoupon);
-        } catch (DataIntegrityViolationException e) {
-            throw new InvalidException("이미 발급된 쿠폰입니다.");
-        }
-    }
-
-    @Transactional
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    public Coupon getCouponWithLock(Long couponId) {
-        return couponRepository.findByIdForUpdate(couponId)
-                .orElseThrow(() -> new NotFoundException("쿠폰을 찾을 수 없습니다."));
-    }
-
-    public Coupon getCoupon(Long couponId) {
-        return couponRepository.findById(couponId)
-                .orElseThrow(() -> new NotFoundException("쿠폰을 찾을 수 없습니다."));
-    }
 
     public Page<IssuedCouponResult> getIssuedCouponsByUserId(Long userId, int page, int size) {
 
@@ -98,4 +43,5 @@ public class CouponService {
         Page<IssuedCoupon> issuedCouponPage = issuedCouponRepository.findAllByUserId(userId, pageable);
         return issuedCouponPage.map(IssuedCouponResult::of);
     }
+
 }
