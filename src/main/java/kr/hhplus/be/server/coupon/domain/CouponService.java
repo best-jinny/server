@@ -19,6 +19,11 @@ public class CouponService {
     private final IssuedCouponRepository issuedCouponRepository;
 
     public Long calculateDiscountAmount(Long issuedCouponId, Long orderAmount) {
+
+        if(issuedCouponId == null) {
+            return 0L;
+        }
+
         IssuedCoupon issuedCoupon = issuedCouponRepository.findByIdForUpdate(issuedCouponId)
                 .orElseThrow(() -> new InvalidException("해당 쿠폰을 찾을 수 없습니다."));
 
@@ -29,6 +34,11 @@ public class CouponService {
 
     @Transactional
     public void redeemCoupon(Long issuedCouponId) {
+
+        if(issuedCouponId == null) {
+            return;
+        }
+
         IssuedCoupon issuedCoupon = issuedCouponRepository.findById(issuedCouponId)
                 .orElseThrow(() -> new InvalidException("해당 쿠폰을 찾을 수 없습니다."));
         issuedCoupon.markAsUsed();
