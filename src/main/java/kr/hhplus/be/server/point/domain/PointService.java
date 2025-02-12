@@ -21,7 +21,10 @@ public class PointService {
     /* 충전 */
     @Transactional
     public PointResult charge(Long userId, Long amount) {
-        Point point = pointRepository.findByUserIdForUpdate(userId).orElseThrow(IllegalArgumentException::new);
+        Point point = pointRepository.findByUserIdForUpdate(userId).orElseGet(() -> {
+            Point newPoint = new Point(userId, amount);
+            return pointRepository.save(newPoint);
+        });
         point.charge(amount);
         pointRepository.save(point);
         return PointResult.of(point);
