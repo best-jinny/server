@@ -27,7 +27,6 @@ public class OrderFacade {
     private final CouponService couponService;
     private final OrderService orderService;
     private final PaymentService paymentService;
-    private final DataPlatform dataPlatform;
 
     // 즉시 결제 주문
     @Transactional
@@ -44,7 +43,6 @@ public class OrderFacade {
 
         paymentService.processPayment(new PaymentCommand(user.getId(), order.getId(), order.getFinalPrice(), PaymentMethod.POINT));
         orderService.completeOrder(order);
-        dataPlatform.send();
 
         return OrderResult.from(order);
     }
