@@ -22,6 +22,8 @@ public class OrderOutbox extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OutboxStatus status;
 
+    private int retryCount;
+
     @Builder
     public OrderOutbox(Long orderId, String eventType, String payload, OutboxStatus status) {
         this.orderId = orderId;
@@ -32,6 +34,10 @@ public class OrderOutbox extends BaseTimeEntity {
 
     public void updateStatus(OutboxStatus status) {
         this.status = status;
+    }
+
+    public void incrementRetryCount() {
+        this.retryCount++;
     }
 
 }
