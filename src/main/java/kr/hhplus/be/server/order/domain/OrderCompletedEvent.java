@@ -1,10 +1,14 @@
 package kr.hhplus.be.server.order.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@NoArgsConstructor
 public class OrderCompletedEvent {
-    private final Long orderId;
+    private Long orderId;
+
+    public OrderCompletedEvent(Long orderId) {
+        this.orderId = orderId;
+    }
 }
