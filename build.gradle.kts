@@ -41,6 +41,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("org.redisson:redisson-spring-boot-starter:3.27.0")
 	annotationProcessor("org.projectlombok:lombok:1.18.26")
+	implementation("org.springframework.kafka:spring-kafka")
 
 	// QueryDsl
 	implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
@@ -57,6 +58,8 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:mysql")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	testImplementation("org.springframework.kafka:spring-kafka-test")
+	testImplementation("org.testcontainers:kafka:1.19.4")
 }
 
 tasks.withType<Test> {
