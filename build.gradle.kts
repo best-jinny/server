@@ -42,6 +42,8 @@ dependencies {
 	implementation("org.redisson:redisson-spring-boot-starter:3.27.0")
 	annotationProcessor("org.projectlombok:lombok:1.18.26")
 	implementation("org.springframework.kafka:spring-kafka")
+	implementation ("org.springframework.boot:spring-boot-starter-actuator")
+	runtimeOnly ("io.micrometer:micrometer-registry-prometheus")
 
 	// QueryDsl
 	implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
