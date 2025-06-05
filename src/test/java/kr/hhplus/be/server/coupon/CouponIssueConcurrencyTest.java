@@ -1,7 +1,16 @@
 package kr.hhplus.be.server.coupon;
 
 import kr.hhplus.be.server.common.exceptions.NotFoundException;
-import kr.hhplus.be.server.coupon.domain.*;
+import kr.hhplus.be.server.coupon.domain.dto.IssueCouponCommand;
+import kr.hhplus.be.server.coupon.domain.model.Coupon;
+import kr.hhplus.be.server.coupon.domain.processor.CouponIssueProcessor;
+import kr.hhplus.be.server.coupon.domain.processor.CouponStockInitializer;
+import kr.hhplus.be.server.coupon.domain.repository.CouponRepository;
+import kr.hhplus.be.server.coupon.domain.repository.IssuedCouponRepository;
+import kr.hhplus.be.server.coupon.domain.service.CouponIssuanceService;
+import kr.hhplus.be.server.coupon.domain.service.CouponService;
+import kr.hhplus.be.server.coupon.domain.strategy.CouponIssuanceStatus;
+import kr.hhplus.be.server.coupon.domain.strategy.CouponStrategy;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

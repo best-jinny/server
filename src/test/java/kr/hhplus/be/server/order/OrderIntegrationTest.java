@@ -1,7 +1,12 @@
 package kr.hhplus.be.server.order;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.hhplus.be.server.coupon.domain.*;
+import kr.hhplus.be.server.coupon.domain.model.Coupon;
+import kr.hhplus.be.server.coupon.domain.model.CouponStatus;
+import kr.hhplus.be.server.coupon.domain.model.DiscountType;
+import kr.hhplus.be.server.coupon.domain.model.IssuedCoupon;
+import kr.hhplus.be.server.coupon.domain.repository.CouponRepository;
+import kr.hhplus.be.server.coupon.domain.repository.IssuedCouponRepository;
 import kr.hhplus.be.server.order.domain.OrderStatus;
 import kr.hhplus.be.server.order.interfaces.controller.OrderRequest;
 import kr.hhplus.be.server.order.interfaces.controller.OrderResponse;

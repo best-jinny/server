@@ -1,6 +1,7 @@
-package kr.hhplus.be.server.coupon.domain;
+package kr.hhplus.be.server.coupon.domain.repository;
 
 import jakarta.persistence.LockModeType;
+import kr.hhplus.be.server.coupon.domain.model.IssuedCoupon;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Lock;

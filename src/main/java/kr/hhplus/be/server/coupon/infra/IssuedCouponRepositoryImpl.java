@@ -1,13 +1,12 @@
 package kr.hhplus.be.server.coupon.infra;
 
-import kr.hhplus.be.server.coupon.domain.IssuedCoupon;
-import kr.hhplus.be.server.coupon.domain.IssuedCouponRepository;
+import kr.hhplus.be.server.coupon.domain.model.IssuedCoupon;
+import kr.hhplus.be.server.coupon.domain.repository.IssuedCouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository

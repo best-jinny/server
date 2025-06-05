@@ -1,4 +1,6 @@
-package kr.hhplus.be.server.coupon.domain;
+package kr.hhplus.be.server.coupon.domain.repository;
+
+import kr.hhplus.be.server.coupon.domain.model.Coupon;
 
 import java.util.List;
 import java.util.Optional;

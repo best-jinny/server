@@ -1,4 +1,4 @@
-package kr.hhplus.be.server.coupon.domain;
+package kr.hhplus.be.server.coupon.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

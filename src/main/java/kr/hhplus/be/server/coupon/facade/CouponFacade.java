@@ -1,6 +1,10 @@
 package kr.hhplus.be.server.coupon.facade;
 
-import kr.hhplus.be.server.coupon.domain.*;
+import kr.hhplus.be.server.coupon.domain.dto.CouponIssuanceResponse;
+import kr.hhplus.be.server.coupon.domain.dto.IssueCouponCommand;
+import kr.hhplus.be.server.coupon.domain.dto.IssuedCouponResult;
+import kr.hhplus.be.server.coupon.domain.service.CouponIssuanceService;
+import kr.hhplus.be.server.coupon.domain.service.CouponService;
 import kr.hhplus.be.server.user.domain.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

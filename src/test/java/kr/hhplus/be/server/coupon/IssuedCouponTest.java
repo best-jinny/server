@@ -3,9 +3,9 @@ package kr.hhplus.be.server.coupon;
 import kr.hhplus.be.server.common.exceptions.ConflictException;
 import kr.hhplus.be.server.common.exceptions.InvalidException;
 import kr.hhplus.be.server.common.exceptions.NotEnoughException;
-import kr.hhplus.be.server.coupon.domain.Coupon;
-import kr.hhplus.be.server.coupon.domain.CouponStatus;
-import kr.hhplus.be.server.coupon.domain.IssuedCoupon;
+import kr.hhplus.be.server.coupon.domain.model.Coupon;
+import kr.hhplus.be.server.coupon.domain.model.CouponStatus;
+import kr.hhplus.be.server.coupon.domain.model.IssuedCoupon;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

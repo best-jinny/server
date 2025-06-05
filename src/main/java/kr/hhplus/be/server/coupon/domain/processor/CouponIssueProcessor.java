@@ -1,6 +1,11 @@
-package kr.hhplus.be.server.coupon.domain;
+package kr.hhplus.be.server.coupon.domain.processor;
 
 import kr.hhplus.be.server.common.exceptions.NotFoundException;
+import kr.hhplus.be.server.coupon.domain.repository.CouponRepository;
+import kr.hhplus.be.server.coupon.domain.model.IssuedCoupon;
+import kr.hhplus.be.server.coupon.domain.repository.IssuedCouponRepository;
+import kr.hhplus.be.server.coupon.domain.model.Coupon;
+import kr.hhplus.be.server.coupon.domain.strategy.CouponIssuanceStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.*;

@@ -1,6 +1,6 @@
 package kr.hhplus.be.server.config.redis;
 
-import kr.hhplus.be.server.coupon.domain.IssueCouponCommand;
+import kr.hhplus.be.server.coupon.domain.dto.IssueCouponCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

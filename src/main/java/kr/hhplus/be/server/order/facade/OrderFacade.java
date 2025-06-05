@@ -1,9 +1,8 @@
 package kr.hhplus.be.server.order.facade;
 
-import kr.hhplus.be.server.coupon.domain.CouponService;
+import kr.hhplus.be.server.coupon.domain.service.CouponService;
 import kr.hhplus.be.server.order.domain.Order;
 import kr.hhplus.be.server.order.domain.OrderService;
-import kr.hhplus.be.server.order.infra.DataPlatform;
 import kr.hhplus.be.server.payment.domain.PaymentCommand;
 import kr.hhplus.be.server.payment.domain.PaymentMethod;
 import kr.hhplus.be.server.payment.domain.PaymentService;

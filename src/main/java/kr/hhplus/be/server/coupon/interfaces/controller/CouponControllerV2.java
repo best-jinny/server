@@ -1,8 +1,8 @@
 package kr.hhplus.be.server.coupon.interfaces.controller;
 
 import jakarta.validation.Valid;
-import kr.hhplus.be.server.coupon.domain.CouponIssuanceResponse;
-import kr.hhplus.be.server.coupon.domain.CouponStrategy;
+import kr.hhplus.be.server.coupon.domain.dto.CouponIssuanceResponse;
+import kr.hhplus.be.server.coupon.domain.strategy.CouponStrategy;
 import kr.hhplus.be.server.coupon.facade.CouponFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

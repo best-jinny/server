@@ -1,6 +1,8 @@
-package kr.hhplus.be.server.coupon.domain;
+package kr.hhplus.be.server.coupon.domain.strategy;
 
 import kr.hhplus.be.server.common.exceptions.InvalidException;
+import kr.hhplus.be.server.coupon.domain.dto.IssueCouponCommand;
+import kr.hhplus.be.server.coupon.domain.dto.CouponIssuanceResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.*;

@@ -1,7 +1,14 @@
-package kr.hhplus.be.server.coupon.domain;
+package kr.hhplus.be.server.coupon.domain.strategy;
 
 import kr.hhplus.be.server.common.exceptions.InvalidException;
 import kr.hhplus.be.server.common.exceptions.NotFoundException;
+import kr.hhplus.be.server.coupon.domain.dto.CouponIssuanceResponse;
+import kr.hhplus.be.server.coupon.domain.dto.IssueCouponCommand;
+import kr.hhplus.be.server.coupon.domain.dto.IssuedCouponResult;
+import kr.hhplus.be.server.coupon.domain.model.Coupon;
+import kr.hhplus.be.server.coupon.domain.model.IssuedCoupon;
+import kr.hhplus.be.server.coupon.domain.repository.CouponRepository;
+import kr.hhplus.be.server.coupon.domain.repository.IssuedCouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;

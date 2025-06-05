@@ -1,11 +1,9 @@
 package kr.hhplus.be.server.coupon.infra;
 
-import kr.hhplus.be.server.coupon.domain.IssuedCoupon;
+import kr.hhplus.be.server.coupon.domain.model.IssuedCoupon;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 public interface IssuedCouponJpaRepository extends JpaRepository<IssuedCoupon, Long> {
     boolean existsByCouponIdAndUserId(Long couponId, Long userId);

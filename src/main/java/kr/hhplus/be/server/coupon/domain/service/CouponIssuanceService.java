@@ -1,6 +1,9 @@
-package kr.hhplus.be.server.coupon.domain;
+package kr.hhplus.be.server.coupon.domain.service;
 
 import kr.hhplus.be.server.common.exceptions.InvalidException;
+import kr.hhplus.be.server.coupon.domain.strategy.CouponIssuanceStrategy;
+import kr.hhplus.be.server.coupon.domain.dto.IssueCouponCommand;
+import kr.hhplus.be.server.coupon.domain.dto.CouponIssuanceResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
